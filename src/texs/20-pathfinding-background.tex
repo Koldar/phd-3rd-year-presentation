@@ -201,6 +201,17 @@
 \begin{frame}{\A*{} [Nilsson et al., 1972]}
     \begin{block}{\A*{}}
         Given a (usually large) weighted directed graph representing a search space, an initial state $s$ and a set of goal states $T$, 
-        the search algorithm \A*{} looks for the shortest path by iteratively expanding the best node 
+        the best-first search algorithm \A*{} computes a path from $s$ to a state in $T$.
+    \end{block}
+
+    \begin{itemize}
+        \item node evaluation: $f(n) = g(n) + h(n)$;
+        \item $g(n)$: cost of the path for reaching $n$ from $s$;
+        \item $h(n)$: \textit{estimate} of the cost of the shortest-path for reaching a goal in $T$ from $n$;
+        \item picks the best node $n$ found up until now, expands its successors and repeat until a goal is found.
+    \end{itemize}
+
+    \begin{block}{}
+        If $h(n)$ is admissible (it never overestimate the actual cost of the shortest path from $n$ to a state in $T$), then \A*{} is optimal.
     \end{block}
 \end{frame}
