@@ -1,0 +1,299 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NOTATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NewDocumentCommand{\CSP}{}{%
+    \wrapMath{\Theta}%
+}
+
+\NewDocumentCommand{\PACSP}{}{%
+    \wrapMath{\Sigma}%
+}
+
+\NewDocumentCommand{\IACSP}{}{%
+    \wrapMath{\Omega}%
+}
+
+\NewDocumentCommand{\constraint}{m m m}{%
+    \wrapMath{#1 #2 #3}%
+}
+
+\NewDocumentCommand{\inverseRelation}{m}{%
+    \wrapMath{{#1}^{\smile}}%
+}
+
+\NewDocumentCommand{\RelationsSet}{}{%
+    \wrapMath{\mathbf{B}}%
+}
+
+\NewDocumentCommand{\ConstraintClass}{}{%
+    \wrapMath{\mathcal{C}}%
+}
+
+\NewDocumentCommand{\tlGraph}{}{%
+    \wrapMath{\mathcal{G}}%
+}
+
+\NewDocumentCommand{\translation}{m}{%
+    \wrapMath{\pi(#1)}%
+}
+
+\NewDocumentCommand{\piOne}{m}{%
+    \wrapMath{\pi_1(#1)}%
+}
+
+\NewDocumentCommand{\piTwo}{m}{%
+    \wrapMath{\pi_2(#1)}%
+}
+
+% an interval algebra relation
+\NewDocumentCommand{\iarel}{m}{%
+    \wrapMath{\{#1\}}%
+}
+
+\NewDocumentCommand{\SigmaOne}{m}{%
+    \wrapMath{\Sigma_1}%
+}
+
+\NewDocumentCommand{\SigmaTwo}{m}{%
+    \wrapMath{\Sigma_2}%
+}
+
+% a generic disjunction in \OrdHornName{}
+\NewDocumentCommand{\disjunction}{}{%
+    \wrapMath{\delta}%
+}
+
+% represents the set of disjunctions involved in a reduction epoch
+\NewDocumentCommand{\disjunctionSet}{}{%
+    \wrapMath{D}%
+}
+
+% represents the set of scc ids in a reduction epoch
+\NewDocumentCommand{\SCCUsed}{}{%
+    \wrapMath{\Delta}%
+}
+
+% represents a reduction epoch of \OHSATAlgorithmName
+\NewDocumentCommand{\reductionEpoch}{}{%
+    \wrapMath{\rho}%
+}
+
+% represents the disjunct in a disjunction of \disjunctionSet that is removed from the disjunction
+% param1 a disjujnct in \disjunctionSet
+\NewDocumentCommand{\disjunctRemoved}{m}{%
+    \wrapMath{{#1}^{-}}%
+}
+
+% represents the disjunct in a disjunction of \disjunctionSet that is added in \SigmaOne
+% param1 a disjujnct in \disjunctionSet
+\NewDocumentCommand{\disjunctAdded}{m}{%
+    \wrapMath{{#1}_{+}}%
+}
+
+% reduction chain containing the sequence of disjunction reduction of \OHSATAlgorithmName{}
+\NewDocumentCommand{\reductionChain}{m}{%
+    \wrapMath{\mathcal{C}({#1})}%
+}
+
+\NewDocumentCommand{\SCCFusionMatrixName}{m}{%
+    \code{SFM}%
+}
+
+% print the SCCFusionMatrix indexed by row and column
+% param1 reduction epoch 
+% param3 vertex involved
+\NewDocumentCommand{\SCCFusionMatrix}{m m}{%
+    \code{SFM}[#1,#2]%
+}
+
+% induced graph
+% param1 the scc involved
+% param3 the graph where the scc is located
+\NewDocumentCommand{\inducedGraph}{m m}{%
+    \wrapMath{I(#1, #2)}%
+}
+
+\NewDocumentCommand{\SCC}{}{%
+    \wrapMath{\sigma}%
+}
+
+\NewDocumentCommand{\noteq}{}{%
+    \wrapMath{\not =}%
+}
+
+\NewDocumentCommand{\flawedSCCSet}{}{%
+    S%
+}
+
+% print E_{1}[2], the notation used to symbolize the set of flaws in specific flawed scc
+% param1 < or \noteq
+% param2 the flawed scc involved
+\NewDocumentCommand{\EdgeSet}{m m}{%
+    \wrapMath{E_{#1}[#2]}%
+}
+
+\NewDocumentCommand{\EdgeSetAbstract}{m}{%
+    \wrapMath{E_{#1}}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NAMES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% print the name of a base IA relation
+\NewDocumentCommand{\iabrel}{m}{%
+    \IfStrEq{#1}{<}{%
+        \wrapMath{<}%
+    }{
+        \IfStrEq{#1}{>}{%
+            \wrapMath{>}%
+        }{
+            \IfStrEq{#1}{m}{%
+                \textit{meets}%
+            }{
+                \IfStrEq{#1}{mi}{%
+                    \textit{met-by}%
+                }{
+                    \IfStrEq{#1}{d}{%
+                        \textit{during}%
+                    }{
+                        \IfStrEq{#1}{di}{%
+                            \textit{contains}%
+                        }{
+                            \IfStrEq{#1}{o}{%
+                                \textit{overlaps}%
+                            }{
+                                \IfStrEq{#1}{oi}{%
+                                    \textit{overlapped-by}%
+                                }{
+                                    \IfStrEq{#1}{s}{%
+                                        \textit{starts}%
+                                    }{
+                                        \IfStrEq{#1}{si}{%
+                                            \textit{started-by}%
+                                        }{
+                                            \IfStrEq{#1}{f}{%
+                                                \textit{finishes}%
+                                            }{
+                                                \IfStrEq{#1}{fi}{%
+                                                    \textit{finished-by}%
+                                                }{
+                                                    \IfStrEq{#1}{=}{%
+                                                        \textit{equals}%
+                                                    }{
+                                                        \errmessage{invalid character for iabrel macro}%
+                                                    }   
+                                                }   
+                                            }   
+                                        }   
+                                    }   
+                                }   
+                            }   
+                        }   
+                    }   
+                }   
+            }   
+        }    
+    }
+}
+
+\NewDocumentCommand{\SCCName}{}{%
+    SCC%
+}
+
+\NewDocumentCommand{\SCCNames}{}{%
+    SCCs%
+}
+
+\NewDocumentCommand{\CSPName}{}{%
+    CSP%
+}
+
+\NewDocumentCommand{\CSPNames}{}{%
+    CSPs%
+}
+
+\NewDocumentCommand{\TCSPName}{}{%
+    TCSP%
+}
+
+\NewDocumentCommand{\TCSPNames}{}{%
+    TCSPs%
+}
+
+\NewDocumentCommand{\PAName}{}{%
+    PA%
+}
+
+\NewDocumentCommand{\IAName}{}{%
+    IA%
+}
+
+\NewDocumentCommand{\IARelation}{}{%
+    \IAName{}-relation%
+}
+
+\NewDocumentCommand{\IARelations}{}{%
+    \IAName{}-relations%
+}
+
+\NewDocumentCommand{\SIAName}{}{%
+    SIA%
+}
+
+\NewDocumentCommand{\PARelation}{}{%
+    \PAName{}-relation%
+}
+
+\NewDocumentCommand{\PARelations}{}{%
+    \PAName{}-relations%
+}
+
+\NewDocumentCommand{\PAConstraint}{}{%
+    \PAName{}-constraint%
+}
+
+\NewDocumentCommand{\PAConstraints}{}{%
+    \PAName{}-constraints%
+}
+
+\NewDocumentCommand{\OrdHornName}{}{%
+    ORD-Horn%
+}
+
+\NewDocumentCommand{\tlGraphName}{}{%
+    TL-Graph%
+}
+
+\NewDocumentCommand{\tlGraphNames}{}{%
+    TL-Graphs%
+}
+
+\NewDocumentCommand{\DPSATProblemName}{}{%
+    \textsc{D-PSAT}%
+}
+
+\NewDocumentCommand{\DOHSATProblemName}{}{%
+    \textsc{D-OHSAT}%
+}
+
+\NewDocumentCommand{\PSATProblemName}{}{%
+    \textsc{P-SAT}%
+}
+
+\NewDocumentCommand{\ISATProblemName}{}{%
+    \textsc{I-SAT}%
+}
+
+\NewDocumentCommand{\DPASATAlgorithmName}{}{%
+    \textsc{Dpasat}%
+}
+
+\NewDocumentCommand{\OHSATAlgorithmName}{}{%
+    \textsc{ORD-HornSat}%
+}
+
+\NewDocumentCommand{\DOHSATAlgorithmName}{}{%
+    \textsc{Dohsat}%
+}

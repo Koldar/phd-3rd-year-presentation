@@ -1,0 +1,184 @@
+\section*{Introduction}
+
+\begin{frame}{Introduction}
+    Most Artificial Intelligence fields involve some sort of \textit{reasoning}: given a \textit{knowledge} an agent reasons and acts rationally towards a \textit{goal}.
+
+    Reasoning for a intelligent artificial agent can be \textit{static} or \textit{dynamic}:
+    \begin{itemize}
+        \item Static: solve a problem by exploiting some fixed knowledge;
+        \item Dynamic: solve a problem with mutable knowledge (\eg{} mantaining a property);
+    \end{itemize}
+
+
+    Many applications implicitly involve dynamic reasoning: 
+    while such reasoning can be hard, it often is much faster \wrt{} static reasoning.
+\end{frame}
+
+\begin{frame}{Introduction (2): static reasoning example}
+
+    \begin{block}{\vphantom{}}
+        Given a directed graph $\graph{o} = \paircs{\graphv{}_{0}}{\graphe{o}_{0}}$, check if $\graph{o}$ has at least a cycle
+    \end{block}
+
+    \begin{figure}
+        \begin{subfigure}{0.45\textwidth}
+            \begin{tikzpicture}
+                \tikzstyle{vertex} = [shape=circle, fill=blue!20, draw=blue!50, thick, minimum size=2mm, inner sep=5pt, distance=1.7cm];
+
+                \node[vertex](X) at (23:1.5cm) {$x$};
+                \node[vertex](Y) at (113:1.5cm) {$y$};
+                \node[vertex](Z) at (203:1.5cm) {$z$};
+                \node[vertex](T) at (293:1.5cm) {$t$};
+
+                \draw[-{Latex[length=2mm,width=3mm]}, line width=0.3mm]
+                    (X) edge node[below]{} (Y)
+                    (Y) edge node[left]{} (Z)
+                    (X) edge node[below]{} (Z)
+
+                    (Z) edge node[below]{} (T)
+                ;
+            \end{tikzpicture}
+            \caption{$\graph{o}$ does not have a cycle}
+        \end{subfigure}\hfill%
+        \begin{subfigure}{0.45\textwidth}
+            \begin{tikzpicture}
+                \tikzstyle{vertex} = [shape=circle, fill=blue!20, draw=blue!50, thick, minimum size=2mm, inner sep=5pt, distance=1.7cm];
+
+                \node[vertex](X) at (23:1.5cm) {$x$};
+                \node[vertex](Y) at (113:1.5cm) {$y$};
+                \node[vertex](Z) at (203:1.5cm) {$z$};
+                \node[vertex](T) at (293:1.5cm) {$t$};
+
+                \draw[-{Latex[length=2mm,width=3mm]}, line width=0.3mm]
+                    (X) edge[color=red] node[below]{} (Y)
+                    (Y) edge[color=red] node[left]{} (Z)
+                    (Z) edge[color=red] node[below]{} (X)
+
+                    (Z) edge node[below]{} (T)
+                ;
+            \end{tikzpicture}
+            \caption{$\graph{o}$ has a cycle}
+        \end{subfigure}
+    \end{figure}
+
+\end{frame}
+
+\begin{frame}{Introduction (3): dynamic reasoning example}
+
+    \begin{block}{\vphantom{}}
+        Given a directed acyclic graph $\graph{o}_{0} = \paircs{\graphv{}_{0}}{\graphe{o}_{0}}$, check if $\graph{o}_{i+1} = \paircs{\graphv{}_{0}}{\graphe{o}_{i} \cup \{(u_i,v_i)\}} \; (u_i,v_i \in \graphv{}_{0}, (u_i,v_i) \not \in \graphe{o}_{i}, i = 0, 1, ..., k)$ has at least a cycle
+    \end{block}
+
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.29\textwidth}
+            \centering
+            \begin{tikzpicture}
+                \tikzstyle{vertex} = [shape=circle, fill=blue!20, draw=blue!50, thick, minimum size=2mm, inner sep=5pt, distance=1.7cm];
+
+                \node[vertex](X) at (23:0.9cm) {$x$};
+                \node[vertex](Y) at (113:0.9cm) {$y$};
+                \node[vertex](Z) at (203:0.9cm) {$z$};
+                \node[vertex](T) at (293:0.9cm) {$t$};
+
+                \draw[-{Latex[length=2mm,width=3mm]}, line width=0.3mm]
+                    (X) edge node[below]{} (Y)
+                    (Y) edge node[left]{} (Z)
+                    (Z) edge node[below]{} (T)
+                ;
+            \end{tikzpicture}
+            \caption{$\graph{o}_{0}$ does not have a cycle}
+        \end{subfigure}%
+        \begin{subfigure}{0.04\textwidth}
+            \centering
+            \scalebox{1.5}{$\Rightarrow$}%
+        \end{subfigure}%
+        \begin{subfigure}{0.29\textwidth}
+            \centering
+            \begin{tikzpicture}
+                \tikzstyle{vertex} = [shape=circle, fill=blue!20, draw=blue!50, thick, minimum size=2mm, inner sep=5pt, distance=1.7cm];
+
+                \node[vertex](X) at (23:0.9cm) {$x$};
+                \node[vertex](Y) at (113:0.9cm) {$y$};
+                \node[vertex](Z) at (203:0.9cm) {$z$};
+                \node[vertex](T) at (293:0.9cm) {$t$};
+
+                \draw[-{Latex[length=2mm,width=3mm]}, line width=0.3mm]
+                    (X) edge node[below]{} (Y)
+                    (Y) edge node[left]{} (Z)
+                    (Z) edge node[below]{} (T)
+                    (X) edge node[below]{} (T)
+                ;
+            \end{tikzpicture}
+            \caption{$\graph{o}_{1}$ does not have a cycle ($u_0 = x, v_0=t$)}
+        \end{subfigure}%
+        \begin{subfigure}{0.04\textwidth}
+            \centering
+            \scalebox{1.5}{$\Rightarrow$}%
+        \end{subfigure}%
+        \begin{subfigure}{0.29\textwidth}
+            \centering
+            \begin{tikzpicture}
+                \tikzstyle{vertex} = [shape=circle, fill=blue!20, draw=blue!50, thick, minimum size=2mm, inner sep=5pt, distance=1.7cm];
+
+                \node[vertex](X) at (23:0.9cm) {$x$};
+                \node[vertex](Y) at (113:0.9cm) {$y$};
+                \node[vertex](Z) at (203:0.9cm) {$z$};
+                \node[vertex](T) at (293:0.9cm) {$t$};
+
+                \draw[-{Latex[length=2mm,width=3mm]}, line width=0.3mm]
+                    (X) edge[color=red] node[below]{} (Y)
+                    (Y) edge[color=red] node[left]{} (Z)
+                    (Z) edge[color=red] node[below]{} (X)
+
+                    (Z) edge node[below]{} (T)
+                    (X) edge node[below]{} (T)
+                ;
+            \end{tikzpicture}
+            \caption{$\graph{o}_{2}$ has a cycle ($u_1 = z, v_1=x$).}
+        \end{subfigure}
+    \end{figure}
+
+    the dynamic problem can be solved with $k$ runs of the algorithm solving the static problem
+    
+    \begin{center}
+    \textbf{however}
+    \end{center}
+    
+    some knowledge is \textbf{not} exploited (\ie{} graphs are cumulative).
+\end{frame}
+
+\begin{frame}{Dynamic Graph-based Reasoning Systems}
+
+    The thesis investigates two specific topics involving knowledge represented through graphs:
+
+    \begin{itemize}
+        \item \textbf{Consistency checking problem in temporal reasoning}: check if a network of constraint encoding temporal information is satisfiable;
+        \item \textbf{\Pathfinding{}}: given a graph, find the shortest path from a start vertex to a target.
+    \end{itemize}
+
+    For both of them, we have considered a dynamic variant of the problem and propose efficient algorithms for solving such variant. 
+    The algorithms have been experimentally evaluated showing significant gains \wrt{} \stateofart{}.
+\end{frame}
+
+\begin{frame}{Talk Outline}
+
+    The talk will be outlined as follows
+    \begin{itemize}
+        \item Decremental Consistency Checking Problem:
+        \begin{itemize}
+            \item Background (\CSPName{}, consistency, \tlGraphName{}, temporal algebras);
+            \item Motivation and problem definition;
+            \item \DPASATAlgorithmName{} and \DOHSATAlgorithmName{};
+            \item Experimental results;
+        \end{itemize}
+        \item \SAPFEC{} Problem:
+        \begin{itemize}
+            \item Background (\CPD{});
+            \item Motivation and problem definition;
+            \item \CPDSearch{};
+            \item Experimental results;
+        \end{itemize}
+        \item Conclusion and future works;
+    \end{itemize}
+\end{frame}
