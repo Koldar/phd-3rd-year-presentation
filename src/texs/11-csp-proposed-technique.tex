@@ -17,11 +17,12 @@
     \end{figure}
 \end{frame}
 
-\begin{frame}{Definition}
+\begin{frame}{Definition [Bono, Gerevini, 2018]}
+    \vspace{-8pt}
     Given:
 	\begin{itemize}
-		\item[-] \small{an \textbf{inconsistent temporal CSP} \CSP{} over a class of constraints $\mathcal{C}$};
-		\item[-] \small{a \textbf{sequence} $\CSP{}_{0}, ..., \CSP{}_k$ of \TCSPNames{} over $\mathcal{C}$ such that $\CSP{}= \CSP{}_{0}$ and $\CSP{}_i$ is obtained from $\CSP{}_{i-1}$ by making one constraint relaxation in $\CSP{}_{i-1}$, for $i = 1, ..., k$};
+		\item \small{an \textbf{inconsistent temporal CSP} \CSP{} over a class of constraints $\mathcal{C}$};
+		\item \small{a \textbf{sequence} $\CSP{}_{0}, ..., \CSP{}_k$ of \TCSPNames{} over $\mathcal{C}$ such that $\CSP{}= \CSP{}_{0}$ and $\CSP{}_i$ is obtained from $\CSP{}_{i-1}$ by making one constraint relaxation in $\CSP{}_{i-1}$, for $i = 1, ..., k$};
 	\end{itemize}
 	\textbf{\color{blue} Decremental Consistency Checking} is the problem of \textit{iteratively deciding the consistency} of every $\CSP{}_i$ starting from $\CSP{}_1$ until $i = k$ or $\CSP{}_i$ becomes consistent.
 
@@ -58,14 +59,16 @@
             \end{subfigure}
         \end{figure}
     \end{minipage}}
+
+    If the \TCSPNames{} are all over \PAName{} (\OrdHornName{}), the problem is called \DPSATProblemName{} (\DOHSATProblemName{}).
 \end{frame}
 
-\begin{frame}{\PSATProblemName{}}
+\begin{frame}{\PSATProblemName{} [van Beek, 1992]}
     How to solve the problem of \textit{statically} checking the consistency of a \TCSPName{} \CSP{} over \PAName{} (\PSATProblemName{})?
 
     \begin{itemize}
         \item Compute the \textit{Strongly Connected Components} (\SCCNames{}) of the \tlGraphName{} of \CSP{};
-        \item Edge labeled either with $<$ or $\noteq{}$ is in a \SCCName{} subgraph $\Leftrightarrow$ \CSP{} inconsistent;
+        \item Edge labeled either with \squote{$<$} or \squote{$\noteq{}$} is in a \SCCName{} subgraph $\Leftrightarrow$ \CSP{} inconsistent;
     \end{itemize}
 
     \begin{figure}
@@ -124,5 +127,51 @@
                 (I) edge node[above, yshift=1pt] {$\leq$} (F)
             ;
         \end{tikzpicture}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Solving \DPSATProblemName{}}
+    Proposed algorithm \DPASATAlgorithmName{}:
+    \begin{itemize}
+        \item Decremental variant of \PSATProblemName{};
+        \item Compute useful metadata at the first constraint relaxation allowing us to quickly compute consistency (\ie{} problematic \SCCNames{} and edges in \SCCNames{} with label $\in \{ \squote{<}, \squote{\noteq{}} \}$);
+        \item Mantain such metadata over the sequence of \TCSPNames{};
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Solving \DOHSATProblemName{}}
+    \IAName{} algebra is intractable $\Rightarrow$ consider a subalgebra which is tractable (\OrdHornName{})
+
+    \DOHSATProblemName{}:
+    \begin{itemize}
+        \item Each \TCSPName{} \IACSP{} can be seen as $\piOne{\IACSP{}} \cup \piTwo{\IACSP{}}$ ($\piOne{\IACSP{}}$ = \TCSPName{} over \PAName{}; $\piTwo{\IACSP{}}$: set of at most binary disjunctions where each disjunct is of the form $p \{=, \leq, \noteq{} \} q$ and at least one of them is $p \noteq{} q$)
+    \end{itemize}
+
+    Proposed algorithm \DOHSATAlgorithmName{}:
+    \begin{itemize}
+        \item Decremental variant of \OHSATAlgorithmName{} ([Gerevini, 2005]);
+        \item Use \DPASATAlgorithmName{} to manage $\piOne{\IACSP{}}$;
+        \item Compute useful metadata as soon $\piOne{\IACSP{}}$ becomes consistent allowing us to reuse previous \OHSATAlgorithmName{} inferences;
+        \item Mantain such metadata over the sequence of \TCSPNames{};
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Experimental results}
+    \begin{itemize}
+        \item Each point represents the average CPU-time over 30 instances used by algorithms to solve the decremental problem;
+        \item VB (\OHSATAlgorithmName{} and PC) is the \stateofart{} algorithm statically checking consistency of \TCSPName{} over \PAName{} (\OrdHornName{});
+        \item \textit{Sparse} graphs are graphs with $\lfloor n \log_2{n} \rfloor$ constraints;
+    \end{itemize}
+
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=1.0\textwidth]{src/images/temporal-reasoning/dpasat}
+        \end{subfigure}%
+        \begin{subfigure}{0.49\textwidth}
+            \centering
+            \includegraphics[width=1.0\textwidth]{src/images/temporal-reasoning/dohsat}
+        \end{subfigure}
     \end{figure}
 \end{frame}
