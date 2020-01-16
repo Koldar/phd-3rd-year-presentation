@@ -1,0 +1,334 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% OPERATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\NewDocumentCommand{\replaceCost}{m m}{%
+    {{\color{red} \xcancel{\wrapMath{#1}}}\wrapMath{#2}}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NOTATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\NewDocumentCommand{\graph}{m}{%
+    \IfStrEq{#1}{o}{%
+        \wrapMath{\mathrm{G}}%
+    }{%
+        \IfStrEq{#1}{t}{%
+            \wrapMath{\mathrm{G}''}%
+        }{%
+            \IfStrEq{#1}{p}{%
+                \wrapMath{\mathrm{G}'}%
+            }{%
+                \errmessage{invalid character for graph macro}%
+            }%
+        }%
+    }%
+}
+
+\NewDocumentCommand{\graphn}{}{%
+    \wrapMath{\mathrm{V}}%
+}
+
+\NewDocumentCommand{\graphv}{}{%
+    \graphn{}%
+}
+
+\NewDocumentCommand{\graphe}{m}{%
+    \IfStrEq{#1}{o}{%
+        \wrapMath{\mathrm{E}}%
+    }{%
+        \IfStrEq{#1}{t}{%
+            \wrapMath{\mathrm{E}''}%
+        }{%
+            \IfStrEq{#1}{p}{%
+                \wrapMath{\mathrm{E}'}%
+            }{%
+                \errmessage{invalid character for graphe macro}%
+            }%
+        }%
+    }%
+}
+
+\NewDocumentCommand{\weightk}{m}{%
+    \IfStrEq{#1}{o}{%
+        \wrapMath{k}%
+    }{%
+        \IfStrEq{#1}{t}{%
+            \wrapMath{k''}%
+        }{%
+            \IfStrEq{#1}{p}{%
+                \wrapMath{k'}%
+            }{%
+                \errmessage{invalid character for weight macro}%
+            }%
+        }%
+    }%
+}
+
+\NewDocumentCommand{\perturbations}{}{%
+    \wrapMath{\mathcal{P}}%
+}
+
+\NewDocumentCommand{\CPDof}{m}{%
+    \wrapMath{CPD_{#1}}%
+}
+
+\NewDocumentCommand{\hCPD}{m m}{%
+    \IfStrEq{#1}{o}{%
+        \wrapMath{h[{#2}]}%
+    }{%
+        \IfStrEq{#1}{p}{%
+            \wrapMath{h'[{#2}]}%
+        }{%
+            \errmessage{invalid character for hCPD macro}%
+        }%
+    }%
+}
+
+\NewDocumentCommand{\pathVar}{}{%
+    \wrapMath{p}%
+}
+
+% print notation of the a path
+% param1 either o (original), t (temproary) or p (perturbated)
+% param2 start of the path
+% param2 goal of the path
+\NewDocumentCommand{\pathList}{m m m}{%
+    \IfStrEq{#1}{o}{%
+    \wrapMath{path(#2, #3)}%
+    }{%
+    \IfStrEq{#1}{t}{%
+        \wrapMath{path''(#2, #3)}%
+    }{%
+        \IfStrEq{#1}{p}{%
+            \wrapMath{path'(#2, #3)}%
+        }{%
+            \errmessage{invalid character for pathList macro}%
+        }%
+    }%
+    }%
+}
+
+% print notation of the cost of a path
+% param1 either o (original), t (temproary) or p (perturbated)
+% param2 start of the path
+% param2 goal of the path
+\NewDocumentCommand{\pathCost}{m m m m}{%
+    \IfStrEq{#1}{o}{%
+    \wrapMath{C(#4, \graph{o})}%
+    }{%
+    \IfStrEq{#1}{t}{%
+        \wrapMath{C(#4, \graph{t})}%
+    }{%
+        \IfStrEq{#1}{p}{%
+            \wrapMath{C(#4, \graph{p})}%
+        }{%
+            \errmessage{invalid character for pathCostOptimal macro}%
+        }%
+    }%
+    }%
+}
+
+% print notation of the cost of a path
+% param1 either o (original), t (temproary) or p (perturbated)
+% param2 start of the path
+% param2 goal of the path
+\NewDocumentCommand{\pathCostOptimal}{m m m m}{%
+    \IfStrEq{#1}{o}{%
+        \wrapMath{C(#4, \graph{o})}%
+    }{%
+        \IfStrEq{#1}{t}{%
+            \wrapMath{C(#4, \graph{t})}%
+        }{%
+            \IfStrEq{#1}{p}{%
+                \wrapMath{C(#4, \graph{p})}%
+            }{%
+                \errmessage{invalid character for pathCostOptimal macro}%
+            }%
+        }%
+    }%
+}
+
+
+% an edge inside \graph{} without specifying the edge label
+% param1 source of the edge
+% param2 sink of the edge
+\NewDocumentCommand{\edge}{m m}{%
+    \wrapMath{({#1},{#2})}%
+}
+
+% an edge inside \graphe{}.
+% param1 source of the edge
+% param2 sink of the edge
+% param3 weight of the edge
+\NewDocumentCommand{\weightEdge}{m m m}{%
+    \wrapMath{(#1, #2, #3)}%
+}
+
+% weight of the edge inside \graphe{}
+% param1 source of the edge
+% param2 sink of the edge
+% \NewDocumentCommand{\weight}{s m m}{%
+%     \IfBooleanTF{#1}{%
+%         \wrapMath{w''(\edge{#2}{#3})}%
+%     }{%
+%         \wrapMath{w(\edge{#2}{#3})}%
+%     }
+% }
+
+% weight of the edge inside \graphe{}
+% param1 either o for original, t for temporary of p for perturbated
+% param1 source of the edge
+% param2 sink of the edge
+\NewDocumentCommand{\weight}{m m m}{%
+    \IfStrEq{#1}{o}{%
+        \wrapMath{w({#2}, {#3})}%
+    }{%
+        \IfStrEq{#1}{t}{%
+            \wrapMath{w''({#2}, {#3})}%
+        }{%
+            \IfStrEq{#1}{p}{%
+                \wrapMath{w'({#2}, {#3})}%
+            }{%
+                \errmessage{invalid character for weight macro}%
+            }%
+        }%
+    }%
+}
+
+% weight of a path
+% param1 either o for original, t for temporary of p for perturbated
+% param1 source of the path
+% param2 sink of the path
+% param3 name of the path
+\NewDocumentCommand{\weightPath}{m m m m}{%
+    \IfStrEq{#1}{o}{%
+    \wrapMath{w(#4)}%
+    }{%
+    \IfStrEq{#1}{t}{%
+        \wrapMath{w''(#4)}%
+    }{%
+        \IfStrEq{#1}{p}{%
+            \wrapMath{w'(#4)}%
+        }{%
+            \errmessage{invalid character for weightPath macro}%
+        }%
+    }%
+    }%
+}
+
+% print run notation
+% param1 run start
+% param2 run symbol
+\NewDocumentCommand{\run}{m m}{%
+    \wrapMath{#1/#2}%
+}
+
+% print the cpd path from a source to a target
+% param1 the soruce vertex
+% param2 the target vertex
+\NewDocumentCommand{\CPDPath}{m m}{%
+    \texttt{CPD-Path}[\-#1\-,\-#2\-]%
+}
+
+% TODO update with o,t or p
+\NewDocumentCommand{\CPDPathCostOriginal}{m m}{%
+    \ifmmode{h_{CPD}[#1]}\else{$h_{CPD}[#1]$}\fi%
+}
+
+% TODO update with o,t or p
+\NewDocumentCommand{\CPDPathCostNew}{m m}{%
+    \ifmmode{h'_{CPD}[#1]}\else{$h'_{CPD}[#1]$}\fi%
+}
+
+\NewDocumentCommand{\pathOnGraph}{m m}{%
+    path[#1, #2]%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NAMES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NewDocumentCommand{\CPD}{}{%
+    \textsc{CPD}%
+}
+
+
+\NewDocumentCommand{\CPDs}{}{%
+    \textsc{CPD}s%
+}
+
+\NewDocumentCommand{\SAPFEC}{}{%
+    \textsc{IC-\Pathfinding{}}%
+}
+
+\NewDocumentCommand{\ALT}{}{%
+    \textsc{ALT}%
+}
+
+\NewDocumentCommand{\AWA}{}{%
+    \textsc{AWA$^*$}%
+}
+
+\NewDocumentCommand{\WA}{}{%
+    \textsc{WA$^*$}%
+}
+
+\NewDocumentCommand{\A}{s}{%
+    \textsc{A$^*$}%
+}
+
+\NewDocumentCommand{\CPDSearch}{}{%
+    \textsc{CPD-Search}%
+}
+
+\NewDocumentCommand{\anytimeCPDSearch}{}{%
+    \textsc{Anytime CPD-Search}%
+}
+
+
+\NewDocumentCommand{\CPDPathName}{}{%
+    \texttt{CPD}-Path%
+}
+
+\NewDocumentCommand{\CPDPathsName}{}{%
+    \texttt{CPD}-Paths%
+}
+
+\NewDocumentCommand{\edgecosts}{}{%
+    edge-costs%
+}
+
+\NewDocumentCommand{\edgecost}{}{%
+    edge-cost%
+}
+
+\NewDocumentCommand{\PATHFINDING}{}{%
+    PATHFINDING%
+}
+
+\NewDocumentCommand{\pathfinding}{}{%
+    pathfinding%
+}
+
+\NewDocumentCommand{\Pathfinding}{}{%
+    Pathfinding%
+}
+
+\NewDocumentCommand{\pathplanning}{}{%
+    \pathfinding{}%
+}
+
+\NewDocumentCommand{\Pathplanning}{}{%
+    \Pathfinding{}%
+}
+
+\NewDocumentCommand{\stateofart}{}{%
+    state-of-the-art%
+}
+
