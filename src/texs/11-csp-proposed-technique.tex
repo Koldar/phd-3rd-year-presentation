@@ -21,10 +21,10 @@
     \vspace{-8pt}
     Given:
 	\begin{itemize}
-		\item \small{an \textbf{inconsistent temporal CSP} \CSP{} over a class of constraints $\mathcal{C}$};
+		\item \smallAan \textbf{inconsistent temporal CSP} \CSP{} over a class of constraints $\mathcal{C}$};
 		\item \small{a \textbf{sequence} $\CSP{}_{0}, ..., \CSP{}_k$ of \TCSPNames{} over $\mathcal{C}$ such that $\CSP{}= \CSP{}_{0}$ and $\CSP{}_i$ is obtained from $\CSP{}_{i-1}$ by making one constraint relaxation in $\CSP{}_{i-1}$, for $i = 1, ..., k$};
 	\end{itemize}
-	\textbf{\color{blue} Decremental Consistency Checking} is the problem of \textit{iteratively deciding the consistency} of every $\CSP{}_i$ starting from $\CSP{}_1$ until $i = k$ or $\CSP{}_i$ becomes consistent.
+	\textbf{\color{blue} decremental Consistency Checking} is the problem of \textit{iteratively deciding the consistency} of every $\CSP{}_i$ starting from $\CSP{}_1$ until $i = k$ or $\CSP{}_i$ becomes consistent.
 
     \makebox[\linewidth][c]{\begin{minipage}{1.3\textwidth}
         \begin{figure}
@@ -68,7 +68,7 @@
 
     \begin{itemize}
         \item Compute the \textit{Strongly Connected Components} (\SCCNames{}) of the \tlGraphName{} of \CSP{};
-        \item Edge labeled either with \squote{$<$} or \squote{$\noteq{}$} is in a \SCCName{} subgraph $\Leftrightarrow$ \CSP{} inconsistent;
+        \item edge labeled either with \squote{$<$} or \squote{$\noteq{}$} is in a \SCCName{} subgraph $\Leftrightarrow$ \CSP{} inconsistent.
     \end{itemize}
 
     \begin{figure}
@@ -134,8 +134,8 @@
     Proposed algorithm \DPASATAlgorithmName{}:
     \begin{itemize}
         \item Decremental variant of \PSATProblemName{};
-        \item Compute useful metadata at the first constraint relaxation allowing us to quickly compute consistency (\ie{} problematic \SCCNames{} and edges in \SCCNames{} with label $\in \{ \squote{<}, \squote{\noteq{}} \}$);
-        \item Mantain such metadata over the sequence of \TCSPNames{};
+        \item compute useful metadata at the first constraint relaxation allowing us to quickly compute consistency (\ie{} problematic \SCCNames{} and edges in \SCCNames{} with label $\in \{ \squote{<}, \squote{\noteq{}} \}$);
+        \item mantain such metadata over the sequence of \TCSPNames{}.
     \end{itemize}
 \end{frame}
 
@@ -144,15 +144,15 @@
 
     \DOHSATProblemName{}:
     \begin{itemize}
-        \item Each \TCSPName{} \IACSP{} can be seen as $\piOne{\IACSP{}} \cup \piTwo{\IACSP{}}$ ($\piOne{\IACSP{}}$ = \TCSPName{} over \PAName{}; $\piTwo{\IACSP{}}$: set of at most binary disjunctions where each disjunct is of the form $p \{=, \leq, \noteq{} \} q$ and at least one of them is $p \noteq{} q$)
+        \item Each \TCSPName{} \IACSP{} can be seen as $\piOne{\IACSP{}} \cup \piTwo{\IACSP{}}$ ($\piOne{\IACSP{}}$ = \TCSPName{} over \PAName{}; $\piTwo{\IACSP{}}$: set of at most binary disjunctions where each disjunct is of the form $p \{=, \leq, \noteq{} \} q$ and at least one of them is $p \noteq{} q$).
     \end{itemize}
 
     Proposed algorithm \DOHSATAlgorithmName{}:
     \begin{itemize}
         \item Decremental variant of \OHSATAlgorithmName{} ([Gerevini, 2005]);
-        \item Use \DPASATAlgorithmName{} to manage $\piOne{\IACSP{}}$;
-        \item Compute useful metadata as soon $\piOne{\IACSP{}}$ becomes consistent allowing us to reuse previous \OHSATAlgorithmName{} inferences;
-        \item Mantain such metadata over the sequence of \TCSPNames{};
+        \item use \DPASATAlgorithmName{} to manage $\piOne{\IACSP{}}$;
+        \item compute useful metadata as soon $\piOne{\IACSP{}}$ becomes consistent allowing us to reuse previous \OHSATAlgorithmName{} inferences;
+        \item mantain such metadata over the sequence of \TCSPNames{}.
     \end{itemize}
 \end{frame}
 
@@ -160,7 +160,7 @@
     \begin{itemize}
         \item Each point represents the average CPU-time over 30 instances used by algorithms to solve the decremental problem;
         \item VB (\OHSATAlgorithmName{} and PC) is the \stateofart{} algorithm statically checking consistency of \TCSPName{} over \PAName{} (\OrdHornName{});
-        \item \textit{Sparse} graphs are graphs with $\lfloor n \log_2{n} \rfloor$ constraints;
+        \item \textit{sparse} graphs are graphs with $\lfloor n \log_2{n} \rfloor$ constraints.
     \end{itemize}
 
     \begin{figure}
