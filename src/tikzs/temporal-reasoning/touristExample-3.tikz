@@ -1,0 +1,51 @@
+\tikzstyle{vertex} = [
+	shape=circle,  
+	draw=blue!50, %draw the border to the node
+	fill=blue!20, %fill the space of the node
+	thick,
+	minimum size=1mm, %minimum size of the nodes
+	distance=1cm,
+	inner sep=1pt
+];
+
+\begin{scope}[scale=1.0,shift={(-1,0)}]
+	\node[vertex](Tw) at (90:1.0cm) {Tw};
+	\node[vertex](Mu) at (180:0.5cm) {Mu};
+	\node[vertex](Ch) at (-90:1.0cm) {Ch};
+\end{scope}
+
+\begin{scope}[scale=1.0,shift={(0.8,0)}]
+	\node[vertex](Lu) at (180:1.0cm) {Lu};
+	\node[vertex](Ca) at (-90:1.0cm) {Ca};
+	\node[vertex](Te) at (+90:1.0cm) {Te};
+\end{scope}
+
+\begin{scope}[scale=1.0,shift={(0.9,-1)}]
+	\node[vertex](Ga) at (180:1.0cm) {Ga};
+\end{scope}
+
+%mandatory constraints
+\draw[-{Latex[length=2mm,width=3mm]}, line width=0.3mm, color=black]
+	(Tw) edge[] (Lu)
+	(Ch) edge[] (Lu)
+	(Mu) edge[] (Lu)
+	(Lu) edge[] (Te)
+	(Lu) edge[] (Ca)
+;
+
+%first tourist
+\draw[-{Latex[length=2mm,width=3mm]}, line width=0.3mm, color=red]
+	(Tw) edge[] (Ga)
+	(Ga) edge[] (Ca)
+;
+	
+%second tourist
+\draw[-{Latex[length=2mm,width=3mm]}, line width=0.3mm, color=green]
+	(Mu) edge[] (Ch)
+	(Te) edge[] (Ga)
+;
+
+%third tourist
+\draw[-{Latex[length=2mm,width=3mm]}, line width=0.3mm, color=blue]
+	(Ch) edge[] (Tw)
+;

@@ -1,0 +1,70 @@
+\tikzstyle{vertex} = [
+	shape=circle,  
+	draw=blue!50, %draw the border to the node
+	fill=blue!20, %fill the space of the node
+	thick,
+	minimum size=4mm, %minimum size of the nodes
+	distance=1cm
+];
+\pgfarrowsdeclare{directEdge}{directEdge}{%
+	\arrowsize=0.2pt
+	\advance\arrowsize by .5\pgflinewidth
+	\pgfarrowsleftextend{-4\arrowsize-.5\pgflinewidth}
+	\pgfarrowsrightextend{.5\pgflinewidth}
+}{%
+	\arrowsize=1pt
+	\advance\arrowsize by .5\pgflinewidth
+	\pgfsetdash{}{0pt} % do not dash
+	\pgfsetroundjoin % fix join
+	\pgfsetroundcap % fix cap
+	\pgfpathmoveto{\pgfpointorigin}
+	\pgfpathlineto{\pgfpoint{-6\arrowsize}{2.2\arrowsize}}
+	\pgfpathlineto{\pgfpoint{-6\arrowsize}{-2.2\arrowsize}}
+	\pgfpathclose
+	\pgfusepathqfill
+}
+
+\begin{scope}[scale=1.0,shift={(-3,0)}]
+	\node[vertex](Tw) at (60:2.0cm) {Tw};
+	\node[vertex](Mu) at (180:2.0cm) {Mu};
+	\node[vertex](Ch) at (-60:2.0cm) {Ch};
+\end{scope}
+
+\begin{scope}[scale=1.0,shift={(3,0)}]
+	\node[vertex](Lu) at (180:2.0cm) {Lu};
+	\node[vertex](Ca) at (-60:2.0cm) {Ca};
+	\node[vertex](Te) at (+60:2.0cm) {Te};
+\end{scope}
+
+\begin{scope}[scale=1.0,shift={(3,-2)}]
+	\node[vertex](Ga) at (180:2.0cm) {Ga};
+\end{scope}
+
+%mandatory constraints
+\draw[-{Latex[length=2mm,width=3mm]}, line width=0.3mm, color=black]
+	(Tw) edge[] (Lu)
+	(Ch) edge[] (Lu)
+	(Mu) edge[] (Lu)
+	(Lu) edge[] (Te)
+	(Lu) edge[] (Ca)
+;
+
+%first tourist
+\draw[-{Latex[length=2mm,width=3mm]}, line width=0.3mm, color=red]
+	(Tw) edge[] (Ga)
+	(Ga) edge[] (Ca)
+	(Ca) edge[dashed] (Te)
+;
+	
+%second tourist
+\draw[-{Latex[length=2mm,width=3mm]}, line width=0.3mm, color=green]
+	(Tw) edge[dashed] (Mu)
+	(Mu) edge[] (Ch)
+	(Te) edge[] (Ga)
+;
+
+%third tourist
+\draw[-{Latex[length=2mm,width=3mm]}, line width=0.3mm, color=blue]
+	(Ga) edge[dashed] (Ch)
+	(Ch) edge[] (Tw)
+;
